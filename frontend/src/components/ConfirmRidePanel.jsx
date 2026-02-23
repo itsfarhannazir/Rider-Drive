@@ -65,10 +65,9 @@ const ConfirmRidePanel = (props) => {
 
         <button
           onClick={() => {
-             props.getDistancetime();
-             props.createRide();
-             props.setConfirmRidePanel(false);
-             props.setLookingForDriverPanel(true);
+            props.createRide();
+            props.setConfirmRidePanel(false);
+            props.setLookingForDriverPanel(true);
           }}
           className={`p-2 w-full rounded-lg text-white font-semibold mt-3 ${props.loading? "bg-gray-400" : "bg-green-600 "}`}
         >

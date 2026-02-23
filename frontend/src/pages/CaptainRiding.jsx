@@ -11,7 +11,7 @@ const CaptainRiding = () => {
   const [finishRidePanel, setFinishRidePanel] = useState(false);
   const [hasArrived, setHasArrived] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  
   const finishRidePanelRef = useRef(null);
 
   const location = useLocation();
@@ -69,7 +69,7 @@ const CaptainRiding = () => {
         </h3>
 
         <div className="1/5 flex items-center justify-between p-3">
-          <h4 className="text-lg font-medium">4.4 KM away </h4>
+          <h4 className="text-lg font-medium">Ride Duration : {rideData?.duration} hours</h4>
 
           {!hasArrived ? (
             <button

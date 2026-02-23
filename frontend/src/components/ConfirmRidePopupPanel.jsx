@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import driver from "../../public/driver.jpg";
-import { Link } from 'react-router-dom';
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 
@@ -58,7 +56,7 @@ const ConfirmRidePopupPanel = (props) => {
             </div>
     
             <div className="text-center">
-              <h3 className="text-xl font-medium">2.2 km</h3>
+              <h3 className="text-xl font-medium">{props.ride?.distance} km</h3>
             </div>
           </div>
     

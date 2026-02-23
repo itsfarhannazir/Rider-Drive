@@ -22,7 +22,7 @@ const RidePopUpPanel = (props) => {
         </div>
 
         <div className="text-center">
-          <h3 className="text-xl font-medium">2.2 km</h3>
+          <h3 className="text-xl font-medium">{props.ride?.distance} km</h3>
         </div>
       </div>
 

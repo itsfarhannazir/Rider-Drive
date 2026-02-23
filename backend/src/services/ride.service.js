@@ -37,6 +37,8 @@ const getFare = async (pickup, destination) => {
     auto: Math.round (baseFare.auto + distanceKm * perKmRate.auto + durationTime * perMinuteRate.auto),
     car: Math.round(baseFare.car + distanceKm * perKmRate.car + durationTime * perMinuteRate.car),
     moto: Math.round(baseFare.moto + distanceKm * perKmRate.moto + durationTime * perMinuteRate.moto) ,
+    distance: distanceKm.toFixed(2),
+    duration : (durationTime/60).toFixed(2)
   };
 
   return fare;
@@ -49,13 +51,18 @@ const createRide = async ({user , pickup , destination , vehicletype}) => {
   }
 
   const fare = await getFare(pickup , destination)
+
+  console.log("Total distance" , fare.distance);
+  
   
   const ride = await rideModel.create({
     user,
     pickup,
     destination,
     vehicletype,
-    fare : fare[vehicletype]
+    fare : fare[vehicletype],
+    distance : fare.distance,
+    duration : fare.duration,
   })
 
   return ride;

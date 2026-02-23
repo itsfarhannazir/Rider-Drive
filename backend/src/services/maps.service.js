@@ -48,7 +48,7 @@ const fetchDistanceTime = async (origin, destination) => {
     );
 
     const route = response.data.features[0].properties.summary;
-
+    
     return {
       distance: route.distance, // in meters
       duration: route.duration, // in seconds

@@ -1,5 +1,8 @@
+import { userModel } from "../models/user.model.js";
 import { fetchgetCoordinates, fetchDistanceTime, getSuggestions } from "../services/maps.service.js";
 import { validationResult } from "express-validator";
+import { sendMessageToSocketId } from "../socket.js";
+import { rideModel } from "../models/ride.model.js";
 
 const getCoordinates = async (req, res, next) => {
 
@@ -24,7 +27,7 @@ const getCoordinates = async (req, res, next) => {
   }
 }
 
-const getDistanceTime = async (req, res, next) => {
+const getDistanceTime = async (req, res) => {
 
   const errors = validationResult(req);
 
@@ -41,6 +44,7 @@ const getDistanceTime = async (req, res, next) => {
     const route = await fetchDistanceTime(coordinates1, coordinates2);
 
     return res.status(200).json(route);
+
   } catch (err) {
     return res.status(404).json({
       message: "Coordinates not found or unable to fetch route",

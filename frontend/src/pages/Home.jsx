@@ -14,7 +14,7 @@ import { useContext } from "react";
 import { useEffect } from "react";
 import { socketDataContext } from "../context/SocketContext";
 import { useNavigate } from "react-router-dom";
-import { distanceTimeDataContext } from "../context/DistanceTimeContext ";
+
 
 const Home = () => {
   const [pickUp, setPickUp] = useState("");
@@ -44,8 +44,7 @@ const Home = () => {
 
   const {user} = useContext(userDataContext);
   const {socket} = useContext(socketDataContext);
-  const {setDistanceTime} = useContext(distanceTimeDataContext);
-
+  
   const navigate = useNavigate();
 
   useEffect(()=>{ 
@@ -214,25 +213,6 @@ const Home = () => {
     }
   }
 
-  const getDistancetime = async () => {
-
-  const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-distance-time` , {
-    params : {
-      origin : pickUp,
-      destination : destination, 
-    } , 
-    headers : {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    }
-  })
-
-  console.log(res.data);
-    setDistanceTime({
-    distance: Math.round(res.data.distance / 1000), // in km
-    duration: res.data.duration,
-  });
-  } 
-
   return (
     <>
       <div className="h-screen relative overflow-hidden">
@@ -333,7 +313,6 @@ const Home = () => {
         className="fixed w-full bg-white translate-y-full z-10  px-6 pt-2 pb-5  rounded-2xl"
       >
         <ConfirmRidePanel
-          getDistancetime = {getDistancetime}
           createRide = {createRide}
           setConfirmRidePanel={setConfirmRidePanel}
           setLookingForDriverPanel={setLookingForDriverPanel}

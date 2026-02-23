@@ -12,8 +12,7 @@ import { useContext } from "react";
 import { captainDataConetxt } from "../context/CaptainContext";
 import { useEffect } from "react";
 import axios from "axios";
-import { userDataContext } from "../context/UserContext";
-import { distanceTimeDataContext } from "../context/DistanceTimeContext ";
+
 
 const CaptainHome = () => {
 
@@ -26,9 +25,6 @@ const CaptainHome = () => {
 
   const {socket} = useContext(socketDataContext);
   const {captain} = useContext(captainDataConetxt);
-  const { distanceTime } = useContext(distanceTimeDataContext);
-
-  console.log("fdssdf" , distanceTime?.distance);
   
 
   useEffect(() => { 
@@ -67,7 +63,7 @@ const CaptainHome = () => {
 
   } , [captain])
 
- socket.on("new-ride" , async (data) => {
+ socket.on("new-ride" , (data) => {
     setRide(data);
     setRidePopUpPanel(true);
   }) 
@@ -153,7 +149,7 @@ const CaptainHome = () => {
         />
       </div>
 
-    </>
+        </>
   )
 }
 
