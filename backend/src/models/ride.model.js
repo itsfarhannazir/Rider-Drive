@@ -20,7 +20,7 @@ const rideSchema = new Schema({
   },
   vehicletype : {
     type : String,
-    enum : ["auto" , "car" , "moto"]
+    enum : ["Auto" , "Car" , "Moto"]
   },
   fare: {
     type: Number,

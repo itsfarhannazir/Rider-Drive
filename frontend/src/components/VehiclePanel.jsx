@@ -22,7 +22,7 @@ const VehiclePanel = (props) => {
         onClick={()=>{
           props.setVehiclePanel(false)
           props.setConfirmRidePanel(true);
-          props.setvehicleType("car")
+          props.setvehicleType("Car")
         }}
         className="w-full flex items-center justify-between mb-3 px-3.5 border border-gray-300 active:border-black rounded-xl py-1 mt-4"
       >
@@ -37,14 +37,14 @@ const VehiclePanel = (props) => {
           <h4 className="font-semibold text-sm">2 mints away</h4>
           <p className="text-gray-700 text-sm">Affordable, compact rides</p>
         </div>
-        <h3 className="text-lg font-semibold">₹{props.fare.car}</h3>
+        <h3 className="text-lg font-semibold">₹{props.fare.Car}</h3>
       </div>
 
       <div
        onClick={()=>{
           props.setVehiclePanel(false)
           props.setConfirmRidePanel(true);
-          props.setvehicleType("moto")
+          props.setvehicleType("Moto")
         }}
         className=" w-full flex items-center justify-between border border-gray-300 mb-3 p-3.5 active:border-black rounded-xl py-1 mt-4"
       >
@@ -59,14 +59,14 @@ const VehiclePanel = (props) => {
           <h4 className="font-semibold text-sm">3 mints away</h4>
           <p className="text-gray-700 text-sm">Affordable, moto rides</p>
         </div>
-        <h3 className="text-lg font-semibold">₹{props.fare.moto}</h3>
+        <h3 className="text-lg font-semibold">₹{props.fare.Moto}</h3>
       </div>
 
       <div
        onClick={()=>{
           props.setVehiclePanel(false)
           props.setConfirmRidePanel(true);
-          props.setvehicleType("auto")
+          props.setvehicleType("Auto")
         }}
         className=" w-full flex items-center justify-between border border-gray-300  mb-3 p-3.5 active:border-black rounded-xl py-1 mt-4"
       >
@@ -81,7 +81,7 @@ const VehiclePanel = (props) => {
           <h4 className="font-semibold text-sm">5 mints away</h4>
           <p className="text-gray-700 text-sm">Affordable, rikshaw rides</p>
         </div>
-        <h3 className="text-lg font-semibold">₹{props.fare.auto}</h3>
+        <h3 className="text-lg font-semibold">₹{props.fare.Auto}</h3>
       </div>
 
     </div>

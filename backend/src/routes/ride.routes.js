@@ -10,7 +10,7 @@ router.post("/create" ,
     [
 body("pickup").isString().isLength({min : 3}).withMessage("Invalid Pickup address"),
 body("destination").isString().isLength({min : 3}).withMessage("Invalid destination address"),
-body("vehicletype").isString().isIn(["auto", "car", "moto"]).withMessage("At least one vahicle is selected"),
+body("vehicletype").isString().isIn(["Auto" , "Car" , "Moto"]).withMessage("At least one vahicle is selected"),
 ],
 createRideController
 )

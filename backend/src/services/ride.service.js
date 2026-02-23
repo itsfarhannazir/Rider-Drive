@@ -16,27 +16,27 @@ const getFare = async (pickup, destination) => {
   const durationTime = distanceTime.duration / 60 ;
   
   const baseFare = {
-    auto: 30,
-    car: 50,
-    moto: 20,
+    Auto: 30,
+    Car: 50,
+    Moto: 20,
   };
 
   const perKmRate = {
-    auto: 10,
-    car: 15,
-    moto: 8,
+    Auto: 10,
+    Car: 15,
+    Moto: 8,
   };
 
   const perMinuteRate = {
-    auto: 2,
-    car: 3,
-    moto: 1.5,
+    Auto: 2,
+    Car: 3,
+    Moto: 1.5,
   };
 
   const fare = {
-    auto: Math.round (baseFare.auto + distanceKm * perKmRate.auto + durationTime * perMinuteRate.auto),
-    car: Math.round(baseFare.car + distanceKm * perKmRate.car + durationTime * perMinuteRate.car),
-    moto: Math.round(baseFare.moto + distanceKm * perKmRate.moto + durationTime * perMinuteRate.moto) ,
+    Auto: Math.round (baseFare.Auto + distanceKm * perKmRate.Auto + durationTime * perMinuteRate.Auto),
+    Car: Math.round(baseFare.Car + distanceKm * perKmRate.Car + durationTime * perMinuteRate.Car),
+    Moto: Math.round(baseFare.Moto + distanceKm * perKmRate.Moto + durationTime * perMinuteRate.Moto) ,
     distance: distanceKm.toFixed(2),
     duration : (durationTime/60).toFixed(2)
   };
@@ -51,9 +51,6 @@ const createRide = async ({user , pickup , destination , vehicletype}) => {
   }
 
   const fare = await getFare(pickup , destination)
-
-  console.log("Total distance" , fare.distance);
-  
   
   const ride = await rideModel.create({
     user,

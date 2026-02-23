@@ -6,45 +6,58 @@ import { sendMessageToSocketId } from "../socket.js";
 import { rideModel } from "../models/ride.model.js";
 import { rideCompleted } from "../services/ride.service.js";
 
-const createRideController = async (req , res , next) => {
-    const errors = validationResult(req);
+const createRideController = async (req, res) => {
+  const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const {pickup , destination , vehicletype} = req.body;
+  const { pickup, destination, vehicletype } = req.body;
 
   try {
-    const ride  = await createRide({
-      user : req.user._id,
-      pickup : pickup,
-      destination : destination,
-      vehicletype : vehicletype
-    })
-
-    res.status(201).json(ride);
+    const ride = await createRide({
+      user: req.user._id,
+      pickup,
+      destination,
+      vehicletype,
+    });
 
     const pickUpCoordinates = await fetchgetCoordinates(pickup);
-    
-    const captains = await getCaptainInTheRadius(pickUpCoordinates.lat , pickUpCoordinates.lng , 50)
 
-    ride.otp = "" // before sending to the captain
+    const captains = await getCaptainInTheRadius(
+      pickUpCoordinates.lat,
+      pickUpCoordinates.lng,
+      50
+    );
+
+    ride.otp = ""; 
 
     const rideWithUser = await rideModel.findById(ride._id).populate("user");
 
-    captains.map((captain) => {
-      sendMessageToSocketId(captain.socketId , {
-        event : "new-ride",
-        data : rideWithUser
-      })
-    })
+    const matchedCaptains = captains.filter(
+      (captain) =>
+        captain.vehicle?.vehicleType?.toLowerCase() ===
+        vehicletype.toLowerCase()
+    );
     
-  } catch (error) {
-    return res.status(401).json({message : "Error in creating Ride"})
-  }
+    if (matchedCaptains.length === 0) {
+      console.log("No captains found with vehicle type:", vehicletype);
+    } else {
+      matchedCaptains.forEach((captain) => {
+        sendMessageToSocketId(captain.socketId, {
+          event: "new-ride",
+          data: rideWithUser,
+        });
+      });
+    }
 
-}
+    return res.status(201).json(ride);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const getFareController = async (req , res , next) => {
   const errors = validationResult(req);
