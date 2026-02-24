@@ -3,8 +3,6 @@ import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 
 const ConfirmRidePopupPanel = (props) => {
-
-  const [otp , setOtp] = useState('')
   const [loading , setLoading] = useState(false);
 
   const navigate = useNavigate();

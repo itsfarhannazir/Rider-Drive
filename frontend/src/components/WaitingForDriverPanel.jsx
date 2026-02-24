@@ -5,9 +5,9 @@ import auto from "../../public/uber_auto.jpg";
 const WaitingForDriver = (props) => {
 
    const vehicleImages = {
-        car : car,
-        moto : moto,
-        auto : auto
+        Car : car,
+        Moto : moto,
+        Auto : auto
       }
 
   return (
