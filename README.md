@@ -5,6 +5,7 @@ Base URL: http://localhost:4000/
 
 ## User Endpoints
 
+
 ### 1) Register User  
 **POST** `/users/register`
 
@@ -340,6 +341,181 @@ Base URL: http://localhost:4000/
   "message": "Input query is required"
 }
 ```
+# Rides API Documentation
 
+This section documents all **Ride-related endpoints** for creating, pricing, confirming, starting, and completing rides in the Rider-Drive application.
+
+All endpoints require authentication using a **Bearer Token**.
+
+
+## 1) Create Ride  
+
+Create a new ride request from pickup to destination.
+
+**POST** `/rides/create`
+
+**Request Body**
+
+```json
+{
+  "pickup": "Faisalabad Pakistan",
+  "destination": "Lahore Pakistan",
+  "vehicletype": "Moto"
+}
+```
+**Request **
+   * pickup (string, required)
+   * destination (string, required)
+   * vehicletype (string, required)
+
+**Response (Success – 200):**
+```json
+{
+  "message": "Ride created successfully",
+  "ride": {
+    "_id": "6990326c9c1112a5dc7bf6be",
+    "pickup": "Faisalabad Pakistan",
+    "destination": "Lahore Pakistan",
+    "vehicletype": "Moto",
+    "fare": 1250,
+    "status": "pending",
+    "user": "699028da12672ca0a8536f86"
+  }
+}
+```
+## 2) Get Fare Estimate
+
+Calculate estimated fare before creating a ride.
+
+**GET** `/rides/get-fare`
+
+**Query Params:**
+   * pickup (string, required)
+   * destination (string, required)
+
+**Response (Success – 200):**
+```json
+{
+  "distanceKm": 375.42,
+  "durationMinutes": 275,
+  "fare": {
+    "Moto": 3200,
+    "Car": 5200,
+    "Auto": 4100
+  }
+}
+```
+
+## 3) Confirm Ride
+
+Captain confirms a ride request.
+
+**POST** `/rides/confirm-ride`
+
+**Request :**
+```json
+{
+  "rideId": "6990326c9c1112a5dc7bf6be"
+}
+```
+**Response (success 200) :**
+```json
+{
+  "message": "Ride confirmed",
+  "ride": {
+    "_id": "6990326c9c1112a5dc7bf6be",
+    "status": "confirmed",
+    "captain": "698cb996162b39876243d10e"
+  }
+}
+```
+## 4) Start Ride
+
+Marks the ride as started.
+
+**GET** `/rides/start-ride`
+
+**Query Params:**
+   * rideId (string, required)
+
+**Request :**
+```json
+{
+  "rideId": "6990326c9c1112a5dc7bf6be"
+}
+```
+**Response (success 200) :**
+```json
+{
+  "message": "Ride started successfully",
+  "ride": {
+    "_id": "6993f988dcc72aec2be07eeb",
+    "status": "ongoing",
+    "startedAt": "2026-02-24T08:30:12.000Z"
+  }
+}
+```
+## 5) Captain Arrived
+
+Captain marks that he has arrived at pickup location.
+
+**POST** `/rides/captain-arrived`
+
+**Request :**
+```json
+{
+  "rideId": "6990326c9c1112a5dc7bf6be"
+}
+```
+**Response (success 200) :**
+```json
+{
+  "message": "Captain arrived at pickup point",
+  "ride": {
+    "_id": "6996d5057af64c26ea4ec6e4",
+    "status": "arrived"
+  }
+}
+```
+## 5) Complete Ride
+
+Mark the ride as completed after reaching destination.
+
+**POST** `/rides/ride-completed`
+
+**Request :**
+```json
+{
+  "rideId": "6990326c9c1112a5dc7bf6be"
+}
+```
+**Response (success 200) :**
+```json
+{
+  "message": "Ride completed successfully",
+  "ride": {
+    "_id": "69974028de77ab279d244f58",
+    "status": "completed",
+    "endedAt": "2026-02-24T09:10:44.000Z",
+    "fare": 1250
+  }
+}
+```
+**Ride Flow**
+
+    Create Ride → Get Fare (optional) → Confirm Ride → Captain Arrived → Start Ride → Complete Ride
+    
+** Distance & Fare Calculation **
+
+Distance and time are calculated using OpenRouteService API, which provides real road distance instead of straight-line distance.
+
+** Notes **
+ * All endpoints are protected
+ * User must be logged in to create rides
+ * Captain must be logged in to confirm/start/complete rides
+ * Vehicle types must match allowed values
+ * Distance and duration are auto-calculated from locations
+   
+    
 
 
