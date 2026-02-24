@@ -505,7 +505,7 @@ Mark the ride as completed after reaching destination.
 
     Create Ride → Get Fare (optional) → Confirm Ride → Captain Arrived → Start Ride → Complete Ride
     
-** Distance & Fare Calculation **
+**Distance & Fare Calculation**
 
 Distance and time are calculated using OpenRouteService API, which provides real road distance instead of straight-line distance.
 
