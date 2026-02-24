@@ -29,8 +29,8 @@ Base URL: http://localhost:4000/
             "lastname": "test"
         },
         "email": "test@gmail.com",
-        "password": "$2b$10$gzSuPrFZrxp8VRoKkUQzrO.D9iZFv/AX0X4eXUTZCxuwIaXRJt6pu", 
-        "_id": "mongo id",
+        "password": "Encrypted Password", 
+        "_id": "User Id",
         "__v": 0
     }
 }
@@ -55,10 +55,10 @@ Base URL: http://localhost:4000/
             "lastname": "test"
         },
         "email": "test@gmail.com",
-        "password": "$2b$10$gzSuPrFZrxp8VRoKkUQzrO.D9iZFv/AX0X4eXUTZCxuwIaXRJt6pu", 
-        "_id": "mongo id",
+        "password": "Encrypted Password", 
+        "_id": "User Id",
         "__v": 0
-        "socketId": "0p6W15NtTtkT8x0_AAAF"
+        "socketId": "Socket Id"
     }
 }
 ```
@@ -97,7 +97,7 @@ Base URL: http://localhost:4000/
     "_id": "mongo id",
     "email": "test@gmail.com",
     "__v": 0,
-    "socketId": "0p6W15NtTtkT8x0_AAAF"
+    "socketId": "Socket Id"
 }
 ```
 ## Captain Endpoints
@@ -118,7 +118,7 @@ Base URL: http://localhost:4000/
     "plate": "vehicle plate number",
     "capacity": "In numbers",
     "color": "vehicle color",
-    "vehicleType": "Your vehicle type (car, auto , moto)"
+    "vehicleType": "Your vehicle type (Car, Auto , Moto)"
   }
 }
 ```
@@ -132,7 +132,7 @@ Base URL: http://localhost:4000/
            "lastname": "test"
         },
         "email": "test@gmail.com",
-        "password": "$2b$10$EAR2zF/h9b2vaRpXqmbzh.xJ5c9KvpaOKaNiF0ZWJ.ddFAqb/67cu",
+        "password": "Encrypted Password",
         "status": "inactive",
         "vehicle": {
             "plate": "vehicle plate number",
@@ -140,7 +140,7 @@ Base URL: http://localhost:4000/
             "color": "vehicle color",
             "vehicleType": "Your vehicle type (car, auto , moto)"
             }
-        "_id": "699ac8d2552313ae0661c07b",
+        "_id": "Captain Id",
         "__v": 0
     }
 }
@@ -172,18 +172,18 @@ Base URL: http://localhost:4000/
             "plate": "vehicle plate number",
             "capacity": "In numbers",
             "color": "vehicle color",
-            "vehicleType": "Your vehicle type (car, auto , moto)"
+            "vehicleType": "Your vehicle type (Car, Auto , Moto)"
             },
-        "_id": "698cb996162b39876243d10e",
+        "_id": "Captain Id",
         "email": "test@gmail.com",
-        "password": "$2b$10$j9JxYheHGo3G/iO59AX1e.VfWfxtCKAHO7gF.O7PTXpXUikjJsCAS",
+        "password": "Encrypted Pass",
         "status": "inactive",
         "__v": 0,
-        "socketId": "7-Y1j_dUBGWztbhzAAAH"
+        "socketId": "Socket Id"
     }
 }
 ```
-### 3) Logout User  
+### 3) Logout Captain  
 **GET** `/captains/logout`
 
 **Request Body :**
@@ -223,17 +223,123 @@ Base URL: http://localhost:4000/
             "plate": "vehicle plate number",
             "capacity": "In numbers",
             "color": "vehicle color",
-            "vehicleType": "Your vehicle type (car, auto , moto)"
+            "vehicleType": "Your vehicle type (Car, Auto , Moto)"
        },
-        "_id": "698cb996162b39876243d10e",
+        "_id": "Captain Id ",
         "email": "test@gmail.com",
         "status": "inactive",
         "__v": 0,
-        "socketId": "7-Y1j_dUBGWztbhzAAAH"
+        "socketId": "Socket Id"
     }
 }
 ```
+## Maps Endpoints
 
+> All Maps endpoints require authentication.  
+> Add JWT token in headers:  
+> `Authorization: Bearer <JWT_TOKEN>`
+
+---
+
+### 1) Get Address Latitude & Longitude  
+**GET** `/maps/get-coordinates`
+
+**Query Params:**
+- `address` (string, required)
+
+**Example:**
+
+     /maps/get-coordinates?address=Lahore Pakistan
+
+**Headers:**
+
+     Authorization: Bearer JWT_TOKEN
+     
+**Response (Success – 200):**
+```json
+{
+  "success": true,
+  "coordinates": {
+    "lat": 31.5204,
+    "lng": 74.3587
+  }
+}
+```
+**Response (Error – 400):**
+```json
+{
+  "success": false,
+  "message": "Address is required"
+}
+```
+### 2) Get Distance & Time Between Two Locations
+
+**GET** `/maps/get-distance-time`
+**Query Params:**
+   * origin (string, required)
+   * destination (string, required)
+     
+**Example:**
+
+    /maps/get-distance-time?origin=Faisalabad Pakistan&destination=Islamabad Pakistan
+
+**Headers:**
+
+    Authorization: Bearer JWT_TOKEN
+
+**Response (Success – 200):**
+```json
+{
+  "success": true,
+  "distance": {
+    "text": "320 km",
+    "value": 320000
+  },
+  "duration": {
+    "text": "4 hours 30 mins",
+    "value": 16200
+  }
+}
+```
+**Response (Error – 400):**
+```json
+{
+  "success": false,
+  "message": "Origin and destination are required"
+}
+```
+### 3) Get Place Suggestions (Autocomplete)
+
+**GET** `/maps/get-suggestions`
+**Query Params:**
+   * input (string, required)
+     
+**Example:**
+
+     /maps/get-distance-time?origin=Faisalabad Pakistan&destination=Islamabad Pakistan
+
+**Headers:**
+
+    Authorization: Bearer JWT_TOKEN
+
+**Response (Success – 200):**
+```json
+{
+  "success": true,
+  "suggestions": [
+    "Islamabad, Pakistan",
+    "Islamgarh, Pakistan",
+    "Islamkot, Pakistan"
+  ]
+}
+```
+**Response (Error – 400):**
+```json
+{
+  "success": false,
+  "message": "Input query is required"
+}
+```
 
 
 
